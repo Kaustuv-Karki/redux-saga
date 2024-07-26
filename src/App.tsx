@@ -1,33 +1,24 @@
 import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
+import { useSelector } from 'react-redux'
 import './App.css'
+import { useDispatch } from 'react-redux'
+import { addUser } from './features/slices/userSlice'
 
 function App() {
-  const [count, setCount] = useState(0)
+  const dispatch = useDispatch()
+  const [text, setText] = useState('')
+  const {names} = useSelector((state) =>state.user)
+  console.log(names)
 
   return (
     <>
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
+    {names.map((name : any, index:any) => (
+      <div key={index}>{name}</div>
+    ))}
+    <input type="text" value={text} onChange={(e) => setText(e.target.value)} />
+    <button onClick={()=>dispatch(addUser(text))}>
+      Add
+    </button>
     </>
   )
 }
