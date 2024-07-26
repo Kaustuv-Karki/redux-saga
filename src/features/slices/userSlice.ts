@@ -2,6 +2,10 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
     names: ["This"],
+    user: {
+        isLoading: false,
+        data: []
+    },
 }
 
 const userSlice = createSlice({
@@ -10,6 +14,18 @@ const userSlice = createSlice({
     reducers: {
         addUser : (state, action) => {
             state.names.push(action.payload)
+        },
+        getUserActions: (state, action) => {
+            state.user.isLoading = true
+            state.user.data = action.payload
+        },
+        getUserSuccess: (state, action) => {
+            state.user.isLoading = false
+            state.user.data = action.payload
+        },
+        getUserFailure: (state, action) => {
+            state.user.isLoading = false
+            state.user.data = action.payload
         }
     }
 })
